@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>General Queue Simulator</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <script src="https://cdn.plot.ly/plotly-2.32.0.min.js"></script>
+</head>
+
+<body>
+    <div class="background-orbs">
+        <div class="orb orb-1"></div>
+        <div class="orb orb-2"></div>
+        <div class="orb orb-3"></div>
+    </div>
+
+    <div class="container">
+        <header>
+            <h1>Queue Simulator <span class="badge">Pro</span></h1>
+            <p>Advanced preemptive queuing simulation with dynamic visualization</p>
+        </header>
+
+        <main>
+            <form id="sim-form" class="glass-panel">
+                <div class="form-grid">
+                    <div class="input-group">
+                        <label for="num_customers">Number of Customers</label>
+                        <input type="number" id="num_customers" name="num_customers" value="10" required>
+                    </div>
+                    <div class="input-group">
+                        <label for="num_servers">Number of Servers</label>
+                        <input type="number" id="num_servers" name="num_servers" value="1" required>
+                    </div>
+                    <div class="input-group" style="grid-column: span 2;">
+                        <label for="preemptive">Scheduling Mode</label>
+                        <select id="preemptive" name="preemptive">
+                            <option value="true">Preemptive Priority</option>
+                            <option value="false">Non-Preemptive</option>
+                        </select>
+                    </div>
+                </div>
+
+                <div class="distributions-grid">
+                    <div class="dist-card">
+                        <h3>Inter-arrival Distribution</h3>
+                        <div class="input-group">
+                            <select id="ia_dist" name="ia_dist">
+                                <option value="exponential">Exponential</option>
+                                <option value="normal">Normal</option>
+                                <option value="uniform">Uniform</option>
+                                <option value="gamma">Gamma</option>
+                            </select>
+                        </div>
+                        <div id="ia_params_container" class="params-container">
+                            <!-- Dynamic params injected here -->
+                        </div>
+                    </div>
+
+                    <div class="dist-card">
+                        <h3>Service Distribution</h3>
+                        <div class="input-group">
+                            <select id="s_dist" name="s_dist">
+                                <option value="exponential">Exponential</option>
+                                <option value="normal">Normal</option>
+                                <option value="uniform">Uniform</option>
+                                <option value="gamma">Gamma</option>
+                            </select>
+                        </div>
+                        <div id="s_params_container" class="params-container">
+                            <!-- Dynamic params injected here -->
+                        </div>
+                    </div>
+                </div>
+
+                <button type="submit" class="submit-btn" id="simulate-btn">
+                    <span>Run Simulation</span>
+                    <div class="loader-spinner" id="btn-spinner" style="display: none;"></div>
+                </button>
+            </form>
+
+            <div id="results-section" class="results-section hidden">
+                <div class="glass-panel chart-container">
+                    <h2>Gantt Chart</h2>
+                    <img id="gantt-img" src="" alt="Gantt Chart">
+                </div>
+
+                <div class="glass-panel chart-container" id="metrics-panel">
+                    <div id="metrics-plotly-container" style="width: 100%;"></div>
+                </div>
+
+                <div class="glass-panel table-container">
+                    <h2>Simulation Log</h2>
+                    <div class="table-wrapper">
+                        <table id="results-table">
+                            <thead>
+                                <tr>
+                                    <th>Customer</th>
+                                    <th>Arrival</th>
+                                    <th>Inter-arrival</th>
+                                    <th>Service</th>
+                                    <th>Start</th>
+                                    <th>End</th>
+                                    <th>Priority</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <!-- Data rows injected here -->
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <script src="{{ url_for('static', filename='script.js') }}"></script>
+</body>
+
+</html>
